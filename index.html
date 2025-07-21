@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anas Transformationsschema - Vecköversikt</title>
+    <meta name="description" content="Anas personliga transformationsschema - Komplett veckoöversikt för ADHD-optimerad utveckling">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Transformation">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23667eea'/%3E%3Ctext x='50' y='60' text-anchor='middle' fill='white' font-size='40'%3E📅%3C/text%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .overview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .current-time {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .transformation-quote {
+            background: linear-gradient(135deg, rgba(102,126,234,0.9) 0%, rgba(118,75,162,0.7) 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2em;
+            margin-bottom: 0;
+        }
+        
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        
+        .day-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+        
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .day-card.today {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102,126,234,0.2);
+        }
+        
+        .day-header {
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+        
+        .monday { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; }
+        .tuesday { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; }
+        .wednesday { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #333; }
+        .thursday { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .friday { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .saturday { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .sunday { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #333; }
+        
+        .day-content {
+            padding: 20px;
+        }
+        
+        .day-theme {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .day-description {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .day-highlights {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        
+        .day-highlights li {
+            padding: 5px 0;
+            font-size: 0.85em;
+            color: #555;
+            border-left: 3px solid #667eea;
+            padding-left: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .day-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 2px;
+        }
+        
+        .weekly-summary {
+            background: #f8f9fa;
+            padding: 30px;
+            border-top: 3px solid #667eea;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .summary-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .summary-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .summary-description {
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .transformation-principles {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+        }
+        
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .principle-card {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .principle-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .principle-description {
+            font-size: 0.9em;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+        
+        .current-week-status {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(102,126,234,0.3);
+        }
+        
+        .status-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .status-message {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+        
+        .quick-actions {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .actions-grid {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102,126,234,0.3);
+        }
+        
+        .footer-navigation {
+            padding: 20px;
+            text-align: center;
+            background: #e8f5e8;
+            border-top: 1px solid #4caf50;
+        }
+        
+        .footer-text {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .today-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        /* Mobilanpassning */
+        @media (max-width: 768px) {
+            body { padding: 5px; }
+            .header { padding: 20px; }
+            .header h1 { font-size: 2em; }
+            .week-grid { grid-template-columns: 1fr; padding: 20px; }
+            .current-time { position: static; margin-top: 10px; }
+            .actions-grid { flex-direction: column; align-items: center; }
+            .summary-grid { grid-template-columns: 1fr; }
+            .principles-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overview-container">
+        <div class="header">
+            <div class="current-time" id="currentTime"></div>
+            <h1>📅 Transformationsschema</h1>
+            <div class="subtitle">Vecköversikt - ADHD-optimerad utvecklingsresa</div>
+        </div>
+        
+        <div class="transformation-quote">
+            "En vecka av medveten transformation är värd mer än ett år av slumpmässig aktivitet. Varje dag är en byggsten i ditt extraordinära liv."
+        </div>
+        
+        <div class="current-week-status" id="weekStatus">
+            <div class="status-title">Nuvarande veckostatus</div>
+            <div class="status-message" id="statusMessage">Laddar aktuell status...</div>
+        </div>
+        
+        <div class="quick-actions">
+            <div class="actions-grid">
+                <a href="#" class="action-btn" onclick="goToToday()">📍 Gå till idag</a>
+                <a href="#" class="action-btn" onclick="showWeeklyReflection()">🔍 Veckoreflekt</a>
+                <a href="test_simple.ics" class="action-btn" download>📱 Ladda ner .ics</a>
+            </div>
+        </div>
+        
+        <div class="week-grid">
+            <div class="day-card monday" onclick="navigateToDay('monday')">
+                <div class="day-header monday">
+                    <div class="today-indicator" id="monday-indicator" style="display: none;">IDAG</div>
+                    🌟 MÅNDAG
+                </div>
+                <div class="day-content">
+                    <div class="day-theme">Kreativ Grund & Systembygge</div>
+                    <div class="day-description">Veckans kreativa språngbräda med fokus på innovation, systemtänkande och mental klarhet.</div>
+                    <ul class="day-highlights">
+                        <li>🧠 ADHD Brain-optimerade rutiner</li>
+                        <li>🎨 Kreativ exploration & innovation</li>
+                        <li>📱 Systemtänkande & verktygsdesign</li>
+                        <li>🏗️ Strukturbyggande för veckan</li>
+                    </ul>
+                    <div class="day-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">18h</div>
+                            <div class="stat-label">Aktiviteter</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">5x</div>
+                            <div class="stat-label">Bönetider</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3h</div>
+                            <div class="stat-label">Kreativ tid</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="day-card tuesday" onclick="navigateToDay('tuesday')">
+                <div class="day-header tuesday">
+                    <div class="today-indicator" id="tuesday-indicator" style="display: none;">IDAG</div>
+                    💝 TISDAG
+                </div>
+                <div class="day-content">
+                    <div class="day-theme">Familjeharmoni & Relationsfördjupning</div>
+                    <div class="day-description">Dedicated familjedag med fokus på kärlek, healing och harmonibyggande relationer.</div>
+                    <ul class="day-highlights">
+                        <li>👨‍👩‍👧‍👦 Intensiv familjetid & närhet</li>
+                        <li>💞 Relationsfördjupning & healing</li>
+                        <li>🏡 Hemkänsla & familjemys</li>
+                        <li>🎯 Balanserad produktivitet</li>
+                    </ul>
+                    <div class="day-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">16h</div>
+                            <div class="stat-label">Aktiviteter</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">4h</div>
+                            <div class="stat-label">Familjetid</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">2h</div>
+                            <div class="stat-label">Arbete</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="day-card wednesday" onclick="navigateToDay('wednesday')">
+                <div class="day-header wednesday">
+                    <div class="today-indicator" id="wednesday-indicator" style="display: none;">IDAG</div>
+                    🏃‍♂️ ONSDAG
+                </div>
+                <div class="day-content">
+                    <div class="day-theme">Fysisk Revitalisering & Återhämtning</div>
+                    <div class="day-description">Helkroppsfokus med träning, återhämtning och fysisk välbefinnande som priority.</div>
+                    <ul class="day-highlights">
+                        <li>💪 Intensiv fysisk träning</li>
+                        <li>🧘‍♂️ Aktiv återhämtning & mindfulness</li>
+                        <li>🌿 Naturkontakt & utomhusaktiviteter</li>
+                        <li>⚡ Energioptimering för veckan</li>
+                    </ul>
+                    <div class="day-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">17h</div>
+                            <div class="stat-label">Aktiviteter</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3h</div>
+                            <div class="stat-label">Träning</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">2h</div>
+                            <div class="stat-label">Återhämtning</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="day-card thursday" onclick="navigateToDay('thursday')">
+                <div class="day-header thursday">
+                    <div class="today-indicator" id="thursday-indicator" style="display: none;">IDAG</div>
+                    🤝 TORSDAG
+                </div>
+                <div class="day-content">
+                    <div class="day-theme">Community Leadership & Social Impact</div>
+                    <div class="day-description">Ledarskap, community-byggande och skapande av positiv påverkan i omvärlden.</div>
+                    <ul class="day-highlights">
+                        <li>👥 Community leadership & social påverkan</li>
+                        <li>🎯 Strategisk projektledning</li>
+                        <li>🌍 Värdeskapande för andra</li>
+                        <li>🚀 Innovation med social impact</li>
+                    </ul>
+                    <div class="day-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">17h</div>
+                            <div class="stat-label">Aktiviteter</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">5h</div>
+                            <div class="stat-label">Leadership</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3h</div>
+                            <div class="stat-label">Community</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="day-card friday" onclick="navigateToDay('friday')">
+                <div class="day-header friday">
+                    <div class="today-indicator" id="friday-indicator" style="display: none;">IDAG</div>
+                    🎨 FREDAG
+                </div>
+                <div class="day-content">
+                    <div class="day-theme">Kreativ Integration & Veckosyntes</div>
+                    <div class="day-description">Completion-dag med kreativ synthesis, polishing och celebration av veckans framsteg.</div>
+                    <ul class="day-highlights">
+                        <li>🎯 Kreativ completion & polishing</li>
+                        <li>📊 Veckosyntes & integrerat skapande</li>
+                        <li>🕌 Flexibel fredagsbön & spirituality</li>
+                        <li>🎉 Veckocelebration med familjen</li>
+                    </ul>
+                    <div class="day-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">17h</div>
+                            <div class="stat-label">Aktiviteter</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">6h</div>
+                            <div class="stat-label">Completion</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">2h</div>
+                            <div class="stat-label">Celebration</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="day-card saturday" onclick="navigateToDay('saturday')">
+                <div class="day-header saturday">
+                    <div class="today-indicator" id="saturday-indicator" style="display: none;">IDAG</div>
+                    🌊 LÖRDAG
+                </div>
+                <div class="day-content">
+                    <div class="day-theme">Återhämtning & Flöde</div>
+                    <div class="day-description">Helgmys, naturligt flöde och fördjupad kvalitetstid med familjen utan press.</div>
+                    <ul class="day-highlights">
+                        <li>🏡 Naturligt hemmaflöde & familjemys</li>
+                        <li>🌿 Flexibel struktur utan prestationspress</li>
+                        <li>💆‍♂️ Mental & fysisk avslappning</li>
+                        <li>🎮 Lek, glädje & spontanitet</li>
+                    </ul>
+                    <div class="day-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">12h</div>
+                            <div class="stat-label">Aktiviteter</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">6h</div>
+                            <div class="stat-label">Familj</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">0h</div>
+                            <div class="stat-label">Arbete</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="day-card sunday" onclick="navigateToDay('sunday')">
+                <div class="day-header sunday">
+                    <div class="today-indicator" id="sunday-indicator" style="display: none;">IDAG</div>
+                    🌅 SÖNDAG
+                </div>
+                <div class="day-content">
+                    <div class="day-theme">Spiritual Förnyelse & Veckoberedning</div>
+                    <div class="day-description">Andlig fördjupning, reflektion och gentle förberedelse för kommande vecka.</div>
+                    <ul class="day-highlights">
+                        <li>🕌 Fördjupad andlig praktik</li>
+                        <li>📚 Lärande & personlig utveckling</li>
+                        <li>🎯 Gentle veckoplanering</li>
+                        <li>🌱 Inspiration & visionssättning</li>
+                    </ul>
+                    <div class="day-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">14h</div>
+                            <div class="stat-label">Aktiviteter</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">3h</div>
+                            <div class="stat-label">Andligt</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">2h</div>
+                            <div class="stat-label">Planering</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="weekly-summary">
+            <h3 style="text-align: center; margin-bottom: 10px; color: #333;">🌟 Veckans Transformationsfokus</h3>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-icon">🧠</div>
+                    <div class="summary-title">ADHD-Optimerat</div>
+                    <div class="summary-description">Specialanpassat för ADHD-hjärnan med tydlig struktur, energihantering och flexibilitet.</div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-icon">⚡</div>
+                    <div class="summary-title">Energihantering</div>
+                    <div class="summary-description">Strategisk energifördelning med high-impact aktiviteter när fokuset är som bäst.</div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-icon">🎯</div>
+                    <div class="summary-title">Målinriktad Transformation</div>
+                    <div class="summary-description">Varje dag bygger systematiskt mot personlig utveckling och livsmålsförverkligande.</div>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-icon">💝</div>
+                    <div class="summary-title">Familjebalans</div>
+                    <div class="summary-description">Harmonisk integration av personlig utveckling med familjeliv och relationer.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="transformation-principles">
+            <h3 style="text-align: center; margin-bottom: 10px;">🌟 Transformationsprinciper</h3>
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-title">🎯 Systematisk Progression</div>
+                    <div class="principle-description">Varje dag bygger på föregående med tydliga connections och accumulative benefits som skapar exponentiell utveckling.</div>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-title">⚡ Energi-optimering</div>
+                    <div class="principle-description">ADHD-anpassad energihantering med high-impact aktiviteter vid peak times och recovery vid low-energy periods.</div>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-title">🕌 Andlig Grund</div>
+                    <div class="principle-description">Islam som fundament skapar meaning, guidance och community-connection genom hela veckan.</div>
+                </div>
+                
+                <div class="principle-card">
+                    <div class="principle-title">💝 Familjeharmoni</div>
+                    <div class="principle-description">Personal growth som strengthens family bonds, inte konkurrerar med dem. Win-win för alla.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-navigation">
+            <div class="footer-text">
+                💡 Klicka på valfri dag för att öppna detaljerat schema med påminnelser och guidance.
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('sv-SE', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        
+        function updateWeekStatus() {
+            const now = new Date();
+            const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const dayNamesSwedish = ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'];
+            const currentDay = dayNames[now.getDay()];
+            const currentDaySwedish = dayNamesSwedish[now.getDay()];
+            
+            // Highlight today's card
+            document.querySelectorAll('.day-card').forEach(card => {
+                card.classList.remove('today');
+            });
+            
+            document.querySelectorAll('.today-indicator').forEach(indicator => {
+                indicator.style.display = 'none';
+            });
+            
+            const todayCard = document.querySelector(`.day-card.${currentDay}`);
+            const todayIndicator = document.getElementById(`${currentDay}-indicator`);
+            
+            if (todayCard) {
+                todayCard.classList.add('today');
+            }
+            
+            if (todayIndicator) {
+                todayIndicator.style.display = 'block';
+            }
+            
+            // Update status message
+            const statusMessage = document.getElementById('statusMessage');
+            const hour = now.getHours();
+            
+            let message = '';
+            if (hour < 6) {
+                message = `God morgon! ${currentDaySwedish}s transformation börjar snart. 🌅`;
+            } else if (hour < 12) {
+                message = `${currentDaySwedish}s morgonaktiviteter pågår. Håll fokus! 🎯`;
+            } else if (hour < 18) {
+                message = `${currentDaySwedish}s huvudaktiviteter. Du gör fantastiskt! 💪`;
+            } else {
+                message = `${currentDaySwedish}s kvällsaktiviteter. Prepare för vila. 🌙`;
+            }
+            
+            statusMessage.textContent = message;
+        }
+        
+        function navigateToDay(day) {
+            const dayMap = {
+                'monday': 'monday_schedule.html',
+                'tuesday': 'tuesday_schedule.html',
+                'wednesday': 'wednesday_schedule.html',
+                'thursday': 'thursday_schedule.html',
+                'friday': 'friday_schedule.html',
+                'saturday': 'saturday_schedule.html',
+                'sunday': 'sunday_schedule.html'
+            };
+            
+            if (dayMap[day]) {
+                window.location.href = dayMap[day];
+            }
+        }
+        
+        function goToToday() {
+            const now = new Date();
+            const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const currentDay = dayNames[now.getDay()];
+            navigateToDay(currentDay);
+        }
+        
+        function showWeeklyReflection() {
+            alert('Veckoreflektionsfunktion kommer snart! 📝');
+        }
+        
+        function initApp() {
+            updateCurrentTime();
+            updateWeekStatus();
+            
+            setInterval(() => {
+                updateCurrentTime();
+                updateWeekStatus();
+            }, 1000);
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+        });
+        
+        // Service Worker för offline-funktionalitet
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(registration => console.log('SW registrerad'))
+                .catch(err => console.log('SW registrering misslyckades'));
+        }
+        
+        // Förhindra zoom på iOS
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html> 
