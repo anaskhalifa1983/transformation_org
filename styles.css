@@ -1,0 +1,425 @@
+/* Performance Optimized CSS */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 10px;
+    line-height: 1.6;
+    min-height: 100vh;
+    /* Optimize for performance */
+    will-change: auto;
+    transform: translateZ(0);
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    overflow: hidden;
+    min-height: calc(100vh - 20px);
+    /* Optimize rendering */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.view { 
+    display: none; 
+}
+
+.view.active { 
+    display: block; 
+}
+
+/* Week Overview Styles */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    font-weight: 300;
+}
+
+.header .subtitle {
+    font-size: 1.2em;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+.current-time {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: rgba(255,255,255,0.2);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.transformation-quote {
+    background: linear-gradient(135deg, rgba(102,126,234,0.9) 0%, rgba(118,75,162,0.7) 100%);
+    color: white;
+    padding: 25px;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.2em;
+}
+
+.quick-actions {
+    padding: 20px 30px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+.actions-grid {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    /* Optimize transitions */
+    will-change: transform, box-shadow;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102,126,234,0.3);
+}
+
+.week-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 30px;
+}
+
+.day-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border: 3px solid transparent;
+    /* Optimize transitions */
+    will-change: transform, box-shadow;
+}
+
+.day-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.day-card.today {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(102,126,234,0.2);
+}
+
+.day-header {
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.3em;
+    position: relative;
+}
+
+/* Day-specific gradients - optimized */
+.monday { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; }
+.tuesday { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); color: #333; }
+.wednesday { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); color: #333; }
+.thursday { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.friday { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.saturday { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.sunday { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #333; }
+
+.day-content {
+    padding: 20px;
+}
+
+.day-theme {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.day-description {
+    font-size: 0.9em;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.today-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff6b6b;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.7em;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+    /* Optimize animation */
+    will-change: opacity;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Day Schedule Styles */
+.schedule-header {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    color: white;
+}
+
+.schedule-header h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    font-weight: 300;
+}
+
+.navigation {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.day-navigation {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.schedule-content {
+    padding: 30px;
+}
+
+.principles {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+}
+
+.principles h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.principle-detailed {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border-left: 4px solid #667eea;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.schedule-grid {
+    display: grid;
+    gap: 15px;
+}
+
+.time-block {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-left: 5px solid #667eea;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    /* Optimize transitions */
+    will-change: transform, box-shadow;
+}
+
+.time-block:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.time-block.current {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: scale(1.02);
+}
+
+.time {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    color: #667eea;
+}
+
+.time-block.current .time {
+    color: white;
+}
+
+.activity {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+.description {
+    font-size: 0.9em;
+    color: #666;
+    line-height: 1.4;
+}
+
+.time-block.current .description {
+    color: rgba(255,255,255,0.9);
+}
+
+/* Color schemes for different days - optimized */
+.monday-scheme { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
+.tuesday-scheme { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+.wednesday-scheme { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); }
+.thursday-scheme { background: linear-gradient(135deg, #2d3436 0%, #636e72 100%); }
+.friday-scheme { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.saturday-scheme { background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%); }
+.sunday-scheme { background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%); }
+
+.monday-header { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); }
+.tuesday-header { background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); }
+.wednesday-header { background: linear-gradient(135deg, #00b894 0%, #00cec9 100%); }
+.thursday-header { background: linear-gradient(135deg, #6c5ce7 0%, #2d3436 100%); }
+.friday-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.saturday-header { background: linear-gradient(135deg, #81c784 0%, #4caf50 100%); }
+.sunday-header { background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%); }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    body { 
+        padding: 5px; 
+    }
+    
+    .header, .schedule-header { 
+        padding: 20px; 
+    }
+    
+    .header h1, .schedule-header h1 { 
+        font-size: 2em; 
+    }
+    
+    .week-grid { 
+        grid-template-columns: 1fr; 
+        padding: 20px; 
+    }
+    
+    .current-time { 
+        position: static; 
+        margin-top: 10px; 
+    }
+    
+    .actions-grid { 
+        flex-direction: column; 
+        align-items: center; 
+    }
+    
+    .schedule-content { 
+        padding: 20px; 
+    }
+    
+    .navigation, .day-navigation { 
+        position: static; 
+        transform: none; 
+        margin-bottom: 10px; 
+    }
+    
+    .day-navigation { 
+        justify-content: center; 
+    }
+    
+    /* Optimize mobile performance */
+    .day-card,
+    .time-block {
+        transition: none;
+    }
+    
+    .day-card:hover,
+    .time-block:hover {
+        transform: none;
+    }
+}
+
+/* Performance optimizations for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .today-indicator {
+        animation: none;
+    }
+}
+
+/* Print styles for better performance */
+@media print {
+    .app-container {
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    .action-btn,
+    .nav-btn {
+        display: none;
+    }
+}
